@@ -1,0 +1,77 @@
+name: iOS compile
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'modules/**'
+      - 'src/**'
+      - 'App.tsx'
+      - 'app.json'
+      - 'package*.json'
+      - '.github/workflows/ios-compile.yml'
+  pull_request:
+    paths:
+      - 'modules/**'
+      - 'src/**'
+      - 'App.tsx'
+      - 'app.json'
+      - 'package*.json'
+      - '.github/workflows/ios-compile.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-compile-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      CI: '1'
+      EXPO_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Install locked JavaScript dependencies
+        run: npm ci
+      - name: Check TypeScript and unit tests
+        run: npm run check
+      - name: Generate the iOS project
+        run: npx expo prebuild --platform ios --no-install
+      - name: Install CocoaPods dependencies
+        run: |
+          gem install cocoapods --no-document
+          pod install --project-directory=ios
+      - name: Compile the unsigned simulator app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -workspace ios/DashyMusic.xcworkspace \
+            -scheme DashyMusic \
+            -configuration Debug \
+            -jobs 3 \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath /tmp/DashyMusicBuild \
+            CODE_SIGNING_ALLOWED=NO \
+            build | tee /tmp/dashymusic-ios-build.log
+      - name: Retain compile diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-compile-diagnostics
+          path: |
+            /tmp/dashymusic-ios-build.log
+            ios/Podfile.lock
+          if-no-files-found: ignore

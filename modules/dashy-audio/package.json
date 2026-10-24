@@ -1,0 +1,12 @@
+{
+  "name": "dashy-audio",
+  "version": "0.2.0",
+  "description": "DashyMusic native iOS background audio and crossfade engine.",
+  "main": "index.ts",
+  "private": true,
+  "license": "0BSD",
+  "peerDependencies": {
+    "expo": "*",
+    "expo-modules-core": "*"
+  }
+}

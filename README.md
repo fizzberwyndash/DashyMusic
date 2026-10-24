@@ -1,65 +1,83 @@
 # DashyMusic
 
-A glass-inspired music companion for iPhone, built with Expo SDK 58 and React Native. Softly blurred video artwork fills the background, with a dark green palette, translucent controls, saved favorites, and a singing panel for timed lyrics.
+A purple-and-cyan glass music app for iPhone, built with Expo SDK 58 and React Native. The player uses each track's artwork as a soft, animated background, with real music discovery, personal playlists, and adjustable transitions.
 
-This first version plays **visible YouTube videos in the foreground**. It is not an audio extraction or background streaming app.
+## Choose how to try it
 
-## Try it on your iPhone from Windows
+| Setup | What you can use | What it requires |
+| --- | --- | --- |
+| Expo Go on your iPhone | New interface, real Audius streaming, local imports, playlists, and foreground AutoMix preview | Windows PC, Node.js 24, free Expo account, compatible Expo Go |
+| Installed iOS development build | Custom native audio engine, background queue/fades, lock-screen controls, and system AirPlay picker | EAS project access, registered iPhone, and paid Apple Developer membership for EAS internal distribution |
+| Installed iOS preview build | Same native features, with the JavaScript bundle included so Metro is unnecessary | The same Apple signing and registered-device requirements |
 
-Get the source folder onto your PC first. If the project is available in your GitHub repository, choose **Code → Download ZIP** on GitHub and extract it. You can also use a source archive exported from the cloud workspace.
+**You do not need an Apple Developer membership to start with Expo Go.** Expo Go cannot contain this project's custom Swift module, so it does not validate reliable crossfades while your screen is locked. Windows plus a free Apple account cannot produce the EAS ad hoc iPhone build described here. The free Apple Personal Team route requires a Mac and Xcode, uses short-lived provisioning, and is a different workflow. See [iOS build and signing instructions](docs/IOS-BUILD.md).
 
-1. Install [Node.js 24 LTS](https://nodejs.org/) on Windows.
-2. Install **Expo Go** on your iPhone. Use a version that supports this project's Expo SDK 58.
-3. Open PowerShell in the downloaded `DashyMusic` folder and run:
+## Start on Windows
 
-   ```powershell
-   npm ci
-   npx expo start --lan
-   ```
+After the updated v2 source is available on GitHub, update an existing clone from its folder:
 
-4. Connect your PC and iPhone to the same Wi-Fi network.
-5. Scan the terminal's QR code with the iPhone Camera app, then open it in Expo Go.
+```powershell
+git status
+git pull --ff-only origin main
+```
 
-Allow Node.js through Windows Firewall on your trusted private network if the phone cannot connect. Avoid a guest network that isolates devices. Leave the terminal running while you use the app.
+Preserve any personal changes before pulling. For a fresh copy, use the repository's **Code → Download ZIP** and extract it, or:
 
-If a local connection is unavailable, Expo also supports `npx expo start --tunnel`; tunnel mode requires Expo's ngrok support and an Internet connection. Follow the Expo CLI's installation instructions if it requests that dependency.
+```powershell
+git clone https://github.com/fizzberwyndash/DashyMusic.git
+cd DashyMusic
+```
 
-Windows cannot run Apple's iOS Simulator or Xcode. Testing on your physical iPhone through Expo Go is the intended starting workflow. A standalone iOS build can later use EAS Build, with Apple signing and the relevant Apple Developer membership. EAS distribution and App Store publication are not configured here.
+Install [Node.js 24 LTS](https://nodejs.org/), then open PowerShell in the folder containing `package.json`:
 
-## What works without a search key
+```powershell
+npm.cmd ci
+npx.cmd expo login --no-browser --username andredash
+npx.cmd expo whoami
+npm.cmd run iphone
+```
 
-- Browse eight curated YouTube video shortcuts.
-- Paste a YouTube video link or video ID in Search and open its player.
-- Save and remove favorites; they persist on this device.
-- Use the visible player's play, pause, seeking, and previous/next controls.
-- Import timed lyrics for a video and follow the highlighted line.
+Replace `andredash` if your Expo username is different. Enter your password only at the CLI's private prompt; do not place it in a command or send it in chat. The `--no-browser` flag avoids browser-login handoff problems. Expo's login command does not support a `--force` flag. If you need to change accounts, run `npx.cmd expo logout`, then log in again.
 
-Video availability depends on YouTube, the uploader, your region, age restrictions, and embedding permissions. Some videos must be opened in YouTube instead. The app provides a fallback link when playback fails.
+Install an **Expo Go version supporting SDK 58** on your iPhone. Sign in to the same Expo account shown by `expo whoami`. Keep the phone and PC on the same Wi-Fi, scan the terminal's QR code with the iPhone Camera, and open the link in Expo Go. If the terminal is targeting a development build, press `s` to switch its target to Expo Go.
 
-Favorites retain video IDs rather than caching API metadata indefinitely. Curated videos keep their built-in titles; other saved videos use a generic title after reopening the app.
+Leave the terminal running. Allow Node.js through Windows Firewall on your trusted private network if necessary; guest Wi-Fi can prevent devices from reaching each other. `npx.cmd expo start --go --tunnel` is an alternative when LAN access is unavailable, but it requires Expo's ngrok support and Internet access. Follow the CLI's installation prompt for that dependency.
 
-## Enable YouTube search
+## Music sources
 
-YouTube Data API access includes a free quota; it is not unlimited. Check the current quota and requirements in your Google Cloud project rather than assuming every request is free or that a particular daily allowance applies.
+| Source | Search | Playback in DashyMusic |
+| --- | --- | --- |
+| Audius | Real, keyless catalog search and trending discovery | Full streams that the provider marks publicly streamable |
+| Your audio files | Import through the device file picker | Local playback; files are copied into app storage on iPhone |
+| YouTube | Paste links without a key; metadata search with an optional Data API key | Official visible video player; captions when available |
+| Spotify / SoundCloud | Opens the service's official search page | External service playback; no in-app stream integration |
 
-1. Create or select a project in [Google Cloud Console](https://console.cloud.google.com/).
-2. Enable **YouTube Data API v3** and create an API key.
-3. Restrict the key to the YouTube Data API and apply appropriate application restrictions for your deployment.
-4. Open app settings, paste the key, and choose **Save search key**.
+Audius features independent artists. It does not provide Spotify's catalog, and a familiar song may not be available. Availability, network access, and source quality depend on the provider. The app filters unavailable/gated Audius entries; that does not guarantee every returned stream will remain playable.
 
-The app stores that key locally on your device and sends it to Google for search requests. It is not stored in an encrypted credential vault. A client-side API key is visible to the client and must not be treated as a protected server secret. Do not commit keys or send them in chat. A production app should review key restrictions, abuse controls, and any backend requirements before distribution.
+The app does not extract YouTube audio, bypass DRM, or download streaming tracks for offline use. Your own imported files can play locally. Browser imports use temporary file URLs and must be reimported in a new browser session; iPhone imports are retained in the app's documents directory until you remove the app or its data. Imported titles initially come from filenames; embedded tag/cover extraction is not implemented, so imported tracks may use the app's artwork fallback.
 
-As an alternative for local development, copy `.env.example` to `.env.local`, set `EXPO_PUBLIC_YOUTUBE_API_KEY`, and restart Expo. Variables beginning with `EXPO_PUBLIC_` are embedded in the client bundle. Removing a saved device key falls back to this configured development value if present.
+## Player, library, and AutoMix
 
-Search uses official metadata endpoints for embeddable, syndicated music videos. It does not download media.
+- Purple/cyan translucent panels, animated artwork backgrounds, and real track covers with decorative fallback art.
+- Favorites, recently played tracks, and personal playlists saved on this device. The current playback queue lasts for the session.
+- Crossfade from 0–12 seconds, using equal-power or linear curves. Short tracks limit the overlap to available duration.
+- Intro and outro fades from 0–3 seconds, repeat off/all/one, and 15/30/60-minute sleep choices.
+- **Audition transition** jumps near the end of the current song when a next audio song is queued.
+- Song and playlist sharing sends links or descriptions. It does not create a synchronized listening room or copy another device's local music files.
 
-## Captions and singing lyrics
+AutoMix blends adjacent Audius streams or imported audio. It does not perform AI analysis, beat detection, BPM matching, harmonic mixing, source separation, or guaranteed gapless playback. It cannot prevent a network stall. There is no artificial FLAC/lossless quality selector: playback uses the available source.
 
-The YouTube player requests captions when available. Captions remain inside YouTube's video player and may depend on the video's caption tracks and player settings. The public Data API does not provide arbitrary creators' subtitle text for a separate singing view; caption downloads require authorization and suitable video permissions.
+The installed iOS build uses the local [DashyAudio module](modules/dashy-audio/README.md): two native `AVPlayer` decks, native fade scheduling, native queue advancement, `MPNowPlayingInfoCenter`, remote commands, and `AVRoutePickerView`. In Expo Go, a separate `expo-audio` player provides real audio and a JavaScript-driven preview of the queue/fades. Browser playback uses its own web transport. These preview transports do not establish native screen-off behavior.
 
-For the **Sing it back** panel, open a video and choose **Import .lrc**. Select a `.lrc` or `.txt` file containing timed lyrics you have permission to use. Lines highlight and scroll with the video; tap a line to seek. Each imported file is associated with the selected video and saved locally.
+Collapsing the audio player keeps the song playing. YouTube is separate: its video remains visible and pauses when its sheet closes or the app backgrounds. Force-quitting the app, lost connectivity, interruptions, or system restrictions can stop audio even in a native build.
 
-Example format, using original demonstration text that does **not** match the curated songs:
+## Lyrics and captions
+
+Audius songs automatically look for synchronized lyrics on [LRCLIB](https://lrclib.net/) using an exact artist/title match and a matching recording duration. Matching lyrics highlight and scroll with playback, with a source link. Provider lyrics are kept only in a bounded session cache; songs without a matching timed version stay available for manual imports. Lyrics availability and third-party rights are separate from permission to use the API; review display/distribution rights before releasing a public music service.
+
+Open a song's lyrics panel and choose **Add .lrc**. Import a `.lrc` or `.txt` file containing timed lyrics you have permission to use. Lines highlight and scroll with playback; tap a line to seek. Files are associated with the selected track and saved locally.
+
+This original format example is not the lyrics of a catalog song:
 
 ```text
 [ar:Original demonstration]
@@ -70,58 +88,53 @@ Example format, using original demonstration text that does **not** match the cu
 [00:15.00]And keep the moment close and clear
 ```
 
-Multiple timestamps and an `[offset:+500]` metadata line are supported. Offsets use milliseconds. Files must be smaller than 1 MB and contain valid timestamps.
+Multiple timestamps and `[offset:+500]` metadata are supported; offsets are milliseconds. The importer accepts files up to 1 MB with valid timed lines.
 
-## Playback boundaries
+YouTube captions are requested inside the official video player when available. Its public API cannot supply arbitrary creators' caption text for the separate singing panel. Automatic lyric discovery is not assumed merely because a video has captions.
 
-The official embedded video stays visible, with YouTube controls and branding. Closing the player or leaving the app pauses playback. This YouTube version does not support locked-screen audio, background audio, offline media downloads, or audio-only playback.
+## Optional YouTube search key
 
-Native WebView playback identifies the app using its configured bundle identifier, `com.dashymusic.app`. YouTube error 153 means player identification was not accepted. A deployment may need a real HTTPS application origin supplied as `EXPO_PUBLIC_PLAYER_ORIGIN`; use a host you control and restart Expo. Do not use an invented website or disable browser security to work around identification errors. Native behavior still needs validation on an iPhone.
+Audius and local playback need no API key. For YouTube metadata search:
 
-## Development and checks
+1. Select or create a project in [Google Cloud Console](https://console.cloud.google.com/).
+2. Enable **YouTube Data API v3** and create an API key.
+3. Restrict the key to that API and apply suitable application restrictions for your deployment.
+4. Save it in DashyMusic's settings, or copy `.env.example` to `.env.local`, set `EXPO_PUBLIC_YOUTUBE_API_KEY`, and restart Expo.
 
-```powershell
-npm ci
-npm run check
-npm run web
-npm run export:web
-```
+The API offers a free quota, not unlimited search. Check the project's current quota and terms in Google Cloud. The app sends search requests to Google and does not download media. A locally saved key uses device storage, not an encrypted secret vault; client-side API keys and all `EXPO_PUBLIC_*` values are accessible to the client. Do not commit private credentials or paste them in chat.
+
+YouTube embedding can fail because of a video's restrictions, network access, or player identification. The native player uses the app bundle identifier as its client identity. For a deployment requiring a real hosted origin, `EXPO_PUBLIC_PLAYER_ORIGIN` can supply an HTTPS application origin you control. Error 153 requires checking identification on the device; do not invent a website or disable browser security.
+
+## Development commands
+
+Use Node.js 24; dependency versions are locked in `package-lock.json`. EAS CLI 25.3 is included as a development dependency.
 
 | Command | Purpose |
 | --- | --- |
-| `npm start` | Start Expo and display the device connection instructions |
-| `npm run web` | Start a browser development build |
-| `npm run ios` | Open an iOS Simulator on a Mac with Xcode; unavailable on Windows |
-| `npm run android` | Start an Android development session when an emulator/device is available |
-| `npm run typecheck` | Check the TypeScript source |
-| `npm test` | Run the domain tests for links, search responses, and lyric timing |
-| `npm run check` | Run type checking and domain tests |
-| `npm run export:web` | Generate a production web build in `dist` |
-| `npm run export:ios` | Generate an iOS JavaScript/Hermes bundle; not a signed native app |
-| `npm run iphone` | Start the LAN server for Expo Go on a physical iPhone |
-| `npm run test:e2e` | Run browser integration tests with simulated YouTube responses |
+| `npm.cmd ci` | Install the locked dependencies |
+| `npm.cmd run iphone` | LAN development server for Expo Go |
+| `npm.cmd run iphone:dev` | LAN server for an installed custom development client |
+| `npm.cmd run web` | Browser development build |
+| `npm.cmd run check` | TypeScript checks and unit tests |
+| `npm.cmd run test:e2e` | Browser integration tests |
+| `npm.cmd run export:web` | Production web bundle in `dist` |
+| `npm.cmd run export:ios` | iOS JavaScript/Hermes export; does not compile or sign Swift |
+| `npm.cmd run build:ios:dev` | EAS internal iPhone development build; requires project setup and Apple signing |
+| `npm.cmd run build:ios` | EAS internal iPhone preview build with its bundle included |
 
-For browser tests, start `npm run web -- --port 8081` in one terminal, then run `npx playwright install chromium` and `npm run test:e2e` in another. On Linux the configuration defaults to `/usr/bin/chromium`; override `PLAYWRIGHT_CHROMIUM_PATH` if needed. Use `PLAYWRIGHT_BASE_URL` to test another server address.
+For browser tests, run `npm.cmd run web -- --port 8081` in one terminal, then `npx.cmd playwright install chromium` and `npm.cmd run test:e2e` in another. `PLAYWRIGHT_BASE_URL` and `PLAYWRIGHT_CHROMIUM_PATH` can override the test server and browser executable. `npm.cmd run ios` requires a Mac with Xcode; Windows cannot run the iOS Simulator.
 
-The completed cloud run passed TypeScript, 19 unit tests, 12 browser integration checks across desktop and two iPhone screen sizes, a web export, and an iOS JavaScript/Hermes export. The development server also rendered and navigated successfully. These results do not establish native iPhone or live YouTube playback. See [validation details](docs/VALIDATION.md).
+See [validation evidence](docs/VALIDATION.md) for completed checks and their limits. Provider HTTP responses, TypeScript, mocked browser tests, and JavaScript exports do not establish that Swift compiles or native background playback works. The development workspace has no Mac, Xcode, signed iOS build, or attached iPhone. Follow the physical-device checklist in [iOS build instructions](docs/IOS-BUILD.md) before relying on native background AutoMix.
 
-The cloud workspace runs Linux and has no Xcode or iOS Simulator. Type checks, domain tests, and browser checks do not establish native playback readiness. Browser tests with mocked YouTube responses validate app behavior only; they do not validate real YouTube media playback. Official YouTube documentation and playback requests were restricted by the cloud network during development, so live playback and current provider quotas require confirmation outside that environment.
+## References
 
-Before relying on the iPhone build, check the following on your physical device:
-
-- Open a permitted YouTube video, start it, pause, seek, and switch videos.
-- Confirm YouTube controls remain visible and captions appear for a captioned video.
-- Close the player, lock the phone, and switch apps; playback should pause.
-- Import a timed lyric file for the selected video, check highlighting, and tap a line to seek.
-- Save a favorite, close and reopen the app, and confirm the favorite and imported lyrics persist.
-- Add a restricted search key, run a search, and check unavailable-video and quota errors.
-
-## Provider references
-
+- [Audius API](https://docs.audius.co/)
+- [LRCLIB API](https://lrclib.net/docs)
+- [LRCLIB API terms](https://lrclib.net/developers/terms)
+- [Expo internal distribution](https://docs.expo.dev/build/internal-distribution/)
+- [Apple membership comparison](https://developer.apple.com/support/compare-memberships/)
 - [YouTube API getting started](https://developers.google.com/youtube/v3/getting-started)
-- [Quota costs](https://developers.google.com/youtube/v3/determine_quota_cost)
-- [Search endpoint](https://developers.google.com/youtube/v3/docs/search/list)
-- [IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
-- [Player parameters and captions](https://developers.google.com/youtube/player_parameters)
-- [Caption download permissions](https://developers.google.com/youtube/v3/docs/captions/download)
+- [YouTube quota costs](https://developers.google.com/youtube/v3/determine_quota_cost)
+- [YouTube IFrame Player API](https://developers.google.com/youtube/iframe_api_reference)
+- [YouTube caption permissions](https://developers.google.com/youtube/v3/docs/captions/download)
 - [YouTube developer policies](https://developers.google.com/youtube/terms/developer-policies)

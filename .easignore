@@ -1,0 +1,15 @@
+.git
+node_modules
+dist
+dist-ios
+.expo
+.playwright
+playwright-report
+test-results
+reports
+.env
+.env.local
+.env.*.local
+*.zip
+/ios
+/android

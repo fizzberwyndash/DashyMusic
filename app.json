@@ -3,13 +3,17 @@
     "name": "DashyMusic",
     "slug": "dashymusic",
     "scheme": "dashymusic",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.dashymusic.app"
+      "bundleIdentifier": "com.dashymusic.app",
+      "infoPlist": {
+        "UIBackgroundModes": ["audio"],
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.dashymusic.app"
@@ -18,8 +22,26 @@
       "favicon": "./assets/favicon.png",
       "name": "DashyMusic",
       "shortName": "DashyMusic",
-      "themeColor": "#0B1110"
+      "themeColor": "#09090F"
     },
-    "plugins": ["expo-document-picker"]
+    "plugins": [
+      "expo-document-picker",
+      "expo-font",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": true,
+          "enableBackgroundRecording": false
+        }
+      ],
+      [
+        "expo-dev-client",
+        {
+          "launchMode": "most-recent"
+        }
+      ]
+    ]
   }
 }
