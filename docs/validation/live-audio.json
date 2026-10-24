@@ -1,0 +1,223 @@
+{
+  "discovery": [
+    {
+      "id": "audius:mzXmz1",
+      "title": "On The Floor",
+      "duration": 180
+    },
+    {
+      "id": "audius:a5aXGmz",
+      "title": "nazah - Return feat. Bee-z , Bolu Adubi & perdie",
+      "duration": 170
+    }
+  ],
+  "relay": [
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-7202083/7202084",
+      "type": "audio/mpeg",
+      "bytes": 7202084
+    },
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-6816175/6816176",
+      "type": "audio/mpeg",
+      "bytes": 6816176
+    },
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-6816175/6816176",
+      "type": "audio/mpeg",
+      "bytes": 6816176
+    },
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-7202083/7202084",
+      "type": "audio/mpeg",
+      "bytes": 7202084
+    },
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=0-",
+      "contentRange": "bytes 0-6816175/6816176",
+      "type": "audio/mpeg",
+      "bytes": 6816176
+    },
+    {
+      "host": "validator.eeba4a6ca56a0d87af802270217c2a51.r2.cloudflarestorage.com",
+      "status": 206,
+      "range": "bytes=6946816-",
+      "contentRange": "bytes 6946816-7202083/7202084",
+      "type": "audio/mpeg",
+      "bytes": 255268
+    }
+  ],
+  "first": {
+    "snapshot": {
+      "activeId": "audius:mzXmz1",
+      "playing": true,
+      "buffering": false,
+      "position": 1.239568,
+      "duration": 180,
+      "queueIds": [
+        "audius:mzXmz1",
+        "audius:a5aXGmz"
+      ],
+      "error": null,
+      "transition": null
+    },
+    "slots": [
+      {
+        "id": "audius:mzXmz1",
+        "loaded": true,
+        "position": 1.281101,
+        "duration": 180,
+        "paused": false,
+        "volume": 1,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "id": "audius:a5aXGmz",
+        "loaded": true,
+        "position": 0,
+        "duration": 170.348396,
+        "paused": true,
+        "volume": 0,
+        "readyState": 4,
+        "error": null
+      }
+    ]
+  },
+  "skipped": {
+    "snapshot": {
+      "activeId": "audius:a5aXGmz",
+      "playing": true,
+      "buffering": false,
+      "position": 1.209688,
+      "duration": 170.348396,
+      "queueIds": [
+        "audius:mzXmz1",
+        "audius:a5aXGmz"
+      ],
+      "error": null,
+      "transition": null
+    },
+    "slots": [
+      {
+        "id": "audius:a5aXGmz",
+        "loaded": true,
+        "position": 1.225052,
+        "duration": 170.348396,
+        "paused": false,
+        "volume": 1,
+        "readyState": 4,
+        "error": null
+      }
+    ]
+  },
+  "overlap": {
+    "snapshot": {
+      "activeId": "audius:a5aXGmz",
+      "playing": true,
+      "buffering": false,
+      "position": 2.318556,
+      "duration": 170.348396,
+      "queueIds": [
+        "audius:mzXmz1",
+        "audius:a5aXGmz"
+      ],
+      "error": null,
+      "transition": {
+        "fromId": "audius:mzXmz1",
+        "toId": "audius:a5aXGmz",
+        "progress": 0.386426
+      }
+    },
+    "slots": [
+      {
+        "id": "audius:mzXmz1",
+        "loaded": true,
+        "position": 176.034697,
+        "duration": 180,
+        "paused": false,
+        "volume": 0.8213649020481658,
+        "readyState": 4,
+        "error": null
+      },
+      {
+        "id": "audius:a5aXGmz",
+        "loaded": true,
+        "position": 2.330748,
+        "duration": 170.348396,
+        "paused": false,
+        "volume": 0.5704031010464503,
+        "readyState": 4,
+        "error": null
+      }
+    ]
+  },
+  "completed": {
+    "snapshot": {
+      "activeId": "audius:a5aXGmz",
+      "playing": true,
+      "buffering": false,
+      "position": 6.478991,
+      "duration": 170.348396,
+      "queueIds": [
+        "audius:mzXmz1",
+        "audius:a5aXGmz"
+      ],
+      "error": null,
+      "transition": null
+    },
+    "slots": [
+      {
+        "id": "audius:a5aXGmz",
+        "loaded": true,
+        "position": 6.491384,
+        "duration": 170.348396,
+        "paused": false,
+        "volume": 1,
+        "readyState": 4,
+        "error": null
+      }
+    ]
+  },
+  "paused": {
+    "snapshot": {
+      "activeId": "audius:a5aXGmz",
+      "playing": false,
+      "buffering": false,
+      "position": 6.505358,
+      "duration": 170.348396,
+      "queueIds": [
+        "audius:mzXmz1",
+        "audius:a5aXGmz"
+      ],
+      "error": null,
+      "transition": null
+    },
+    "slots": [
+      {
+        "id": "audius:a5aXGmz",
+        "loaded": true,
+        "position": 6.505358,
+        "duration": 170.348396,
+        "paused": true,
+        "volume": 1,
+        "readyState": 4,
+        "error": null
+      }
+    ]
+  }
+}

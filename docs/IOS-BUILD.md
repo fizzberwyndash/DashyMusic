@@ -92,7 +92,7 @@ Only Audius streams permitted by the provider and imported audio use this engine
 
 ## Physical-device checks before relying on it
 
-No Mac/Xcode compile, signed iOS build, or physical-iPhone audio test was available in the Linux development workspace. A successful JavaScript export or browser test does not compile Swift. After a native build succeeds:
+The [unsigned macOS simulator compile](https://github.com/fizzberwyndash/DashyMusic/actions/runs/40091221025) passed with the custom Swift module. This establishes native compilation and linking, not physical-device playback or signing. No signed iOS build or physical-iPhone audio test has been performed. After your device build succeeds:
 
 1. Confirm the player reports **NATIVE AUDIO**. Play one Audius song and one imported audio file; test play/pause, seeking, and skip.
 2. Queue at least three playable tracks. Set a six-second crossfade, lock the phone, and listen through multiple automatic transitions. Repeat with local files to distinguish engine behavior from network stalls.

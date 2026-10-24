@@ -50,7 +50,7 @@ const AudioRoutePicker = requireNativeViewManager('DashyAudio');
 
 Expo autolinking must discover this folder through the application's local modules directory. Its podspec requires iOS 16.4 or newer and links ExpoModulesCore, AVFoundation, AVKit, MediaPlayer, and UIKit. The root app's configuration owns background modes and build profiles.
 
-This module was authored in a Linux workspace with no Swift compiler, Xcode, Apple SDK, or physical iPhone attached. Native compilation and device playback have **not** been established by TypeScript or browser checks.
+This module was authored in a Linux workspace, then compiled and linked in a real [macOS unsigned simulator build](https://github.com/fizzberwyndash/DashyMusic/actions/runs/40091221025). Native compilation passed. Physical-iPhone playback, screen-off queue transitions, signing, and output-route behavior remain unverified; TypeScript and browser checks do not establish those behaviors.
 
 Before distributing a native build:
 

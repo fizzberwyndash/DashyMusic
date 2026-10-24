@@ -1,0 +1,7 @@
+GitHub Actions: https://github.com/fizzberwyndash/DashyMusic/actions/runs/40091221025
+Implementation commit: 92258ffd78e86370a3fa1774c42eb3c297840a0b
+Unsigned simulator build; physical iPhone playback not tested.
+
+2026-10-24T11:49:51.6814290Z CompileSwift normal x86_64 (in target 'DashyAudio' from project 'Pods')
+2026-10-24T11:49:54.9721030Z CompileSwift normal arm64 (in target 'DashyAudio' from project 'Pods')
+2026-10-24T11:50:56.6594730Z ** BUILD SUCCEEDED **

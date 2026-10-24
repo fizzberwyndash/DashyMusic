@@ -1,6 +1,6 @@
 # DashyMusic
 
-A purple-and-cyan glass music app for iPhone, built with Expo SDK 58 and React Native. The player uses each track's artwork as a soft, animated background, with real music discovery, personal playlists, and adjustable transitions.
+A purple-and-cyan glass music app for iPhone, built with Expo SDK 58 and React Native. The player uses each track's artwork as a soft, animated background, with real music discovery, personal playlists, and adjustable transitions. [View the UI previews](docs/screenshots/).
 
 ## Choose how to try it
 
@@ -14,7 +14,7 @@ A purple-and-cyan glass music app for iPhone, built with Expo SDK 58 and React N
 
 ## Start on Windows
 
-After the updated v2 source is available on GitHub, update an existing clone from its folder:
+Update an existing Git clone from its folder:
 
 ```powershell
 git status
@@ -124,7 +124,7 @@ Use Node.js 24; dependency versions are locked in `package-lock.json`. EAS CLI 2
 
 For browser tests, run `npm.cmd run web -- --port 8081` in one terminal, then `npx.cmd playwright install chromium` and `npm.cmd run test:e2e` in another. `PLAYWRIGHT_BASE_URL` and `PLAYWRIGHT_CHROMIUM_PATH` can override the test server and browser executable. `npm.cmd run ios` requires a Mac with Xcode; Windows cannot run the iOS Simulator.
 
-See [validation evidence](docs/VALIDATION.md) for completed checks and their limits. Provider HTTP responses, TypeScript, mocked browser tests, and JavaScript exports do not establish that Swift compiles or native background playback works. The development workspace has no Mac, Xcode, signed iOS build, or attached iPhone. Follow the physical-device checklist in [iOS build instructions](docs/IOS-BUILD.md) before relying on native background AutoMix.
+See [validation evidence](docs/VALIDATION.md) for completed checks and their limits. Provider HTTP responses, TypeScript, mocked browser tests, and JavaScript exports do not establish that Swift compiles or native background playback works. The Linux development workspace has no Xcode or attached iPhone, but the [unsigned macOS simulator compile](https://github.com/fizzberwyndash/DashyMusic/actions/runs/40091221025) passed, including native module compilation. No signed physical-device build or screen-off playback test has been performed. Follow the physical-device checklist in [iOS build instructions](docs/IOS-BUILD.md) before relying on native background AutoMix.
 
 ## References
 
