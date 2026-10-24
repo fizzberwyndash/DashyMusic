@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "DashyMusic",
+    "slug": "dashymusic",
+    "scheme": "dashymusic",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dashymusic.app"
+    },
+    "android": {
+      "package": "com.dashymusic.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "DashyMusic",
+      "shortName": "DashyMusic",
+      "themeColor": "#0B1110"
+    },
+    "plugins": ["expo-document-picker"]
+  }
+}
